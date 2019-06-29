@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+        Cambiar Sede
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrar()">
+        <ion-icon name="md-close" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>  
+</ion-header>
+<ion-content no-padding>
+  <form (ngSubmit)="continuar()" [formGroup]="formulario" >
+    <ion-item>
+      <ion-label>Sedes disponibles</ion-label>
+      <ion-select placeholder="Selecciona la sede" formControlName="id_sede" okText="Seleccionar" cancelText="Cancelar">
+        <ion-select-option *ngFor="let item of sedes" [value]="item.id">{{item.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-label *ngIf="f.id_sede.touched" class="animated bounceInDown">
+      <ion-text color="danger" *ngIf="f.id_sede.hasError('required')">
+        Debe seleccionar una sede.
+      </ion-text>
+    </ion-label>
+    
+    <div padding>
+      <ion-button expand="block" color="secondary" type="submit" [disabled]="!formulario.valid">Seleccionar</ion-button>
+    </div>
+  </form>
+</ion-content>

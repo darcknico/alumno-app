@@ -1,0 +1,55 @@
+<ion-content padding has-header class="animated fadeIn" color="primary">
+  <!-- Logo -->
+  <div text-center class="animated fadeIn slow">
+    <div class="logo">
+      <ion-img src="/assets/imgs/logo.png" alt="CC"></ion-img>
+    </div>
+    <br>
+    <ion-text color="light">
+      <strong>Autenticación</strong>
+    </ion-text>
+  </div>
+
+  <!-- Login form -->
+  <form [formGroup]="loginForm" >
+    <ion-item>
+      <ion-label position="floating" color="light">
+        <ion-icon name="mail" slot="start" ></ion-icon>
+        Email
+      </ion-label>
+      <ion-input type="email" formControlName="email" name="email"  color="light"></ion-input>
+    </ion-item>
+    <ion-label *ngIf="email.touched" class="animated bounceInDown">
+      <ion-text color="light" *ngIf="email.hasError('required')" >
+        {{ 'error_email_required' | translate }}
+      </ion-text>
+      <ion-text color="light" *ngIf="email.hasError('email')">
+        {{ 'error_email_valid' | translate }}
+      </ion-text>
+    </ion-label>
+    <br>
+    <ion-item>
+      <ion-label position="floating" color="light">
+        <ion-icon name="lock" slot="start" ></ion-icon>
+        Contraseña
+      </ion-label>
+      <ion-input [type]="passwordType" formControlName="password" name="password" (keyup.enter)="onLogin()" color="light"></ion-input>
+      <ion-icon color="light" slot="end" [name]="passwordIcon" (click)='hideShowPassword()'></ion-icon>
+    </ion-item>
+    <ion-label *ngIf="password.touched" class="animated bounceInDown">
+      <ion-text color="light" *ngIf="password.hasError('required')">
+        {{ 'error_password_required' | translate }}
+      </ion-text>
+      <ion-text color="light" *ngIf="password.hasError('minlength')">
+        {{ 'error_password_minlength' | translate:{length: '6'} }}
+      </ion-text>
+    </ion-label>
+    <br>
+    <div padding>
+      <ion-button expand="block" color="secondary" (click)="onLogin()" [disabled]="!loginForm.valid" >
+        <ion-icon slot="start" name="log-in"></ion-icon>
+        INGRESAR
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

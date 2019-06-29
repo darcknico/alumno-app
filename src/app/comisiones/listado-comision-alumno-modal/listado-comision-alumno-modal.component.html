@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title *ngIf="item">
+        Alumnos
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrar()">
+        <ion-icon name="md-close" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>  
+</ion-header>
+<ion-content no-padding>
+  <ion-list lines="full" no-margin>
+    <ion-item>
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col size="9">
+            <ion-label text-center>
+              Alumno
+            </ion-label>
+          </ion-col>
+          <ion-col size="3">
+            <ion-label text-center>
+              Doc.
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item *ngFor="let item of dataSource$ | async" color="light" class="animated slideInRight">
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col size="9"	>
+            <ion-label >
+              {{item.alumno.apellido}} {{item.alumno.nombre}}
+            </ion-label>
+          </ion-col>
+          <ion-col size="3" align-self-center	>
+            <ion-label text-center>
+              <p>{{item.alumno.documento}}</p>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>

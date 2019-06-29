@@ -1,4 +1,16 @@
-.welcome-card ion-img {
-  max-height: 35vh;
-  overflow: hidden;
+$userBackgroundColor: #387ef5;
+$toUserBackgroundColor: #fff;
+
+
+.input-wrap {
+  background:$toUserBackgroundColor;
+  padding: 5px;
+  display: flex;
+  textarea {
+    flex: 1;
+    border: 0;
+    border-bottom: 1px $userBackgroundColor;
+    border-style: solid;
+  }
 }
+

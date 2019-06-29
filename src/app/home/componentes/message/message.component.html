@@ -1,0 +1,23 @@
+<ion-item [class]="itemStyle">
+  <ng-container *ngIf="usuario.id == message.senderId else sent" >
+    <ion-label [class]="labelRecieved" text-wrap >
+      <h2>{{message.text}}</h2>
+    </ion-label>
+    <ion-text class="texto-enviado" *ngIf="ifLastAutorMessage(message)" >
+      <i>
+        {{message.createdAt | date:'dd/MM/yyyy HH:ss':'es-AR'}}
+      </i>
+    </ion-text>
+  </ng-container>
+  <ng-template #sent>
+    <ion-label [class]="labelSent" text-wrap >
+      <p *ngIf="ifFirstAutorMessage(message)">{{message.sender.name}}</p>
+      <h2>{{message.text}}</h2>
+    </ion-label>
+    <ion-text class="texto-enviado" *ngIf="ifLastAutorMessage(message)" style="right: 0px">
+      <i>
+        {{message.createdAt | date:'dd/MM/yyyy HH:ss':'es-AR'}}
+      </i>
+    </ion-text>
+  </ng-template>
+</ion-item>

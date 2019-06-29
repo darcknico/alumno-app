@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  base_path: 'http://alumno-rest.proyectosinformaticos.com.ar/api/',
+  //base_path: 'http://34.226.235.220/alumno-rest/public/index.php/api/',
 };
 
 /*

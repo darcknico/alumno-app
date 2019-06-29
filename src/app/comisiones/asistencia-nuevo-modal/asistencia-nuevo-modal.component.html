@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title *ngIf="item">
+        Generar nueva asistencia
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrar()">
+        <ion-icon name="md-close" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>  
+</ion-header>
+<ion-content no-padding>
+  <form [formGroup]="formulario">
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12" >
+          <ion-item>
+            <ion-label position="floating">
+              Carrera
+            </ion-label>
+            <ion-input formControlName="carrera"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" >
+          <ion-item>
+            <ion-label position="floating">
+              Materia
+            </ion-label>
+            <ion-input formControlName="materia"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" >
+          <ion-item>
+            <ion-label position="floating">
+              Comision Nº
+            </ion-label>
+            <ion-input formControlName="numero"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" >
+          <ion-item>
+            <ion-label position="floating">Fecha</ion-label>
+            <ion-datetime
+              [monthNames]="monthNames"
+              formControlName="fecha"
+              display-format="DD/MM/YYYY" 
+              picker-format="DD MMMM YYYY" 
+              cancelText="Cancelar"
+              doneText="Seleccionar"
+              max="{{hoy}}"
+              ></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button expand="block" color="secondary" type="submit" (click)="continuar()" [disabled]="!formulario.valid" >
+            GENERAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" color="secondary">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title *ngIf="item">
+      {{item.materia.nombre}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content no-padding color="medium">
+  <ion-list *ngIf="item" no-margin lines="none">
+    <ion-item-divider>
+      <ion-label>Datos</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col size="4">
+            <ion-label text-center>
+              <p>Numero</p>
+              <h2>{{item.numero}}</h2>
+            </ion-label>
+          </ion-col>
+          <ion-col size="4">
+            <ion-label text-center>
+              <p>Año</p>
+              <h2>{{item.anio}}</h2>
+            </ion-label>
+          </ion-col>
+          <ion-col size="4" >
+            <ion-label text-center>
+              <p>Alumnos</p>
+              <h2>{{item.alumnos_cantidad}}</h2>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+  <ion-list lines="none" no-margin>
+    <ion-item-divider>
+      <ion-label>Asistencias</ion-label>
+    </ion-item-divider>
+    <ion-item *ngIf="noData">
+      <ion-label>No hay asistencias realizadas</ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-card *ngFor="let item of dataSource$ | async" color="light" class="animated slideInRight">
+    <ion-card-header>
+      <ion-card-subtitle></ion-card-subtitle>
+      <ion-card-title>{{item.fecha | date:'EEEE dd MMMM'}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content no-padding >
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col size="6">
+            <ion-label text-center>
+              <p>Total</p>
+              <h2>{{item.alumnos_cantidad}}</h2>
+            </ion-label>
+          </ion-col>
+          <ion-col size="6">
+            <ion-label text-center>
+              <p>Presentes</p>
+              <h2>{{item.alumnos_cantidad_presente}}</h2>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+    <ion-row class="cardfooter">
+      <ion-col size="4">
+        <ion-button expand="block" color="primary" (click)="eliminar(item)" size="small" strong="true">
+          ELIMINAR
+        </ion-button>
+      </ion-col>
+      <ion-col size="4">
+      </ion-col>
+      <ion-col size="4">
+        <ion-button expand="block" (click)="ver(item)" size="small" fill="clear" >
+          <span color="secondary">
+            <ion-icon name="open" slot="end"></ion-icon>
+            VER
+          </span>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button size="large">
+      <ion-icon name="arrow-dropup"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <div class="custom-fab">
+        <ion-button (click)="nuevo()">Nueva Asistencia</ion-button>
+        <ion-fab-button (click)="nuevo()" size="small">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </div>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

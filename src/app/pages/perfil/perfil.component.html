@@ -1,0 +1,127 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" color="secondary">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Ajustes
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content no-padding>
+  <ion-card *ngIf="usuario$ | async as u">
+    <ion-card-header>
+      <ion-card-subtitle text-wrap>{{u.apellido}} {{u.nombre}}</ion-card-subtitle>
+      <ion-card-title>{{u.tipo.nombre}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content >
+      <ion-row >
+        <ion-col size="4">
+          <ion-label>
+            Email:
+          </ion-label>
+        </ion-col>
+        <ion-col size="8">
+          <ion-label>
+            <b>{{ u.email }}</b>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="u.fecha_nacimiento">
+        <ion-col size="4">
+          <ion-label>
+            Nacimiento:
+          </ion-label>
+        </ion-col>
+        <ion-col size="8">
+          <ion-label>
+            <b>{{ u.fecha_nacimiento | date:'dd/MM/yyyy' }}</b>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="u.documento">
+        <ion-col size="4">
+          <ion-label>
+            {{u.tipo_documento?.nombre}}
+          </ion-label>
+        </ion-col>
+        <ion-col size="8">
+          <ion-label>
+            <b>{{ u.documento }}</b>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="u.celular">
+        <ion-col size="4">
+          <ion-label text-wrap>
+            Celular
+          </ion-label>
+        </ion-col>
+        <ion-col size="8">
+          <ion-label>
+            <b>{{ u.celular }}</b>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="u.telefono">
+        <ion-col size="4">
+          <ion-label>
+            Telefono
+          </ion-label>
+        </ion-col>
+        <ion-col size="8">
+          <ion-label>
+            <b>{{ u.telefono }}</b>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="u.direccion">
+        <ion-col size="4">
+          <ion-label>
+            Direccion
+          </ion-label>
+        </ion-col>
+        <ion-col size="8">
+          <ion-label text-wrap>
+            <b>{{ u.direccion }} {{u.direccion_numero}} {{u.direccion_dpto}} {{u.direccion_piso}}</b>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-sm>
+          <ion-button 
+          type="submit" 
+          color="secondary"
+          expand="block"
+          (click)="cambiar()">
+          Cambiar contraseña
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-sm>
+          <ion-button 
+          type="submit" 
+          color="secondary"
+          expand="block"
+          (click)="cambiar_sede()">
+          Cambiar sede
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-sm>
+          <ion-button 
+          type="submit" 
+          color="danger"
+          expand="block"
+          (click)="salir()">
+          Salir de la cuenta
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      Chat - Usuario
+        <span *ngIf="item else noUsuario">
+          editar
+        </span>
+        <ng-template #noUsuario>
+          agregar
+        </ng-template>
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrar()">
+        <ion-icon name="md-close" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>  
+</ion-header>
+<ion-content no-padding>
+  <form [formGroup]="formulario">
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12" >
+          <ion-item>
+            <ion-label position="floating">
+              Nombre en el chat
+            </ion-label>
+            <ion-input formControlName="nombre"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button expand="block" color="secondary" type="submit" (click)="continuar()" [disabled]="!formulario.valid" >
+            <ng-container *ngIf="item else noUsuario2">
+                EDITAR
+            </ng-container>
+            <ng-template #noUsuario2>
+              INGRESAR
+            </ng-template>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
