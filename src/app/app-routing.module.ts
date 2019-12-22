@@ -24,6 +24,7 @@ const routes: Routes = [
       },
       { path: 'comisiones',loadChildren: './comisiones/comisiones.module#ComisionesModule'},
       { path: 'asistencias',loadChildren: './asistencias/asistencias.module#AsistenciasModule'},
+      { path: 'mesa_examen_materia',loadChildren: './mesa-examen-materia/mesa-examen-materia.module#MesaExamenMateriaModule'},
     ],
   },
   {path: 'external', loadChildren: './external/external.module#ExternalModule'},

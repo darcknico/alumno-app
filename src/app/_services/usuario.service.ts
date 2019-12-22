@@ -27,6 +27,7 @@ export class UsuarioService {
             email:email,
             password:pass,
         }).pipe(map(response=>{
+            this.authService.setUsuario(response);
             let token = response['token'];
             let type = 'Bearer';
             this.authService.login(type,token).then(res=>{

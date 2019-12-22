@@ -95,7 +95,7 @@ export class AuthService {
         });
     }
 
-    public getUsuario(){
+    public getUsuario():Promise<Usuario>{
         return this.deposito.getItem('usuario');
     }
 }

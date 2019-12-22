@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" color="secondary">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Mesa Examen - Materias
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-searchbar no-padding
+      animated="true" 
+      placeholder="Buscar..."
+      (ionInput)="buscar($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content no-padding color="medium">
+  <ion-item *ngIf="total==0 && !consultando" lines="none">
+    <ion-label class="ion-text-center">No hay materias asociadas</ion-label>
+  </ion-item>
+  <ion-card *ngFor="let item of dataSource" class="animated fadeIn" color="light">
+    <ion-card-header>
+      <ion-card-subtitle>{{item.materia.nombre}}</ion-card-subtitle>
+      <ion-card-title>{{item.fecha | date:'HH:mm EEEE dd MMMM'}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content no-padding>
+      <ion-item lines="none" color="light">
+        <ion-label>
+          <p>Carrera</p>
+          <h2>{{item.carrera.nombre}}</h2>
+        </ion-label>
+      </ion-item>
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col size="4">
+            <ion-label text-center>
+              <p>Total</p>
+              <h2>{{item.alumnos_cantidad}}</h2>
+            </ion-label>
+          </ion-col>
+          <ion-col size="4">
+            <ion-label text-center>
+              <p>Aprobados</p>
+              <h2>{{item.alumnos_cantidad_aprobado}}</h2>
+            </ion-label>
+          </ion-col>
+          <ion-col size="4">
+            <ion-label text-center>
+              <p>Desaprobados</p>
+              <h2>{{item.alumnos_cantidad_no_aprobado}}</h2>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">
+            <ion-label text-center>
+              <p>Presentes</p>
+              <h2>{{item.alumnos_cantidad_presente}}</h2>
+            </ion-label>
+          </ion-col>
+          <ion-col size="4" *ngIf="item.fecha_cierre">
+            <ion-label text-center>
+              <p>Cierre</p>
+              <h2>{{item.fecha_cierre | date:'dd/MM/yy'}}</h2>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+    <ion-row class="cardfooter">
+      <ion-col size="4">
+        
+      </ion-col>
+      <ion-col size="4">
+        
+      </ion-col>
+      <ion-col size="4">
+        <ion-button expand="block" color="primary" (click)="ver(item)" size="small" fill="clear">
+          <ion-icon name="open" slot="end"></ion-icon>
+          VER
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  
+  <ion-grid *ngIf="dataSource.length == 0 && consultando" class="animated zoomIn">
+    <ion-row align-items-center>
+      <ion-col align-self-center>
+        <ion-spinner 
+          name="lines" color="primary"
+          style=" position: initial;"
+          ></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" *ngIf="total>0" class="animated zoomIn">
+    <ion-infinite-scroll-content
+      loadingSpinner="lines"
+      loadingText="Consultando...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

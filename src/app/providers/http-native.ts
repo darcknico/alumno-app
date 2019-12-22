@@ -77,7 +77,10 @@ export class HttpNativeProvider {
     }
 
     private parseError(err){
-        err.error = JSON.parse(err.error);
+        console.log(err);
+        if(err.error){
+            err.error = JSON.parse(err.error);
+        }
         return throwError(err);
     }
 }

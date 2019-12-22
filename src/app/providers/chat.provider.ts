@@ -111,6 +111,8 @@ export class ChatProvider {
       console.log('Connect Error on connection', err);
       if(err.info.error == "services/chatkit/not_found/user_not_found"){
         this.isUsuario = false;
+      } else {
+        this.isUsuario = false;
       }
       return false;
     });
@@ -144,7 +146,10 @@ export class ChatProvider {
     this.messages = [];
     if(this.currentUser){
       console.log('Cerrando anterior chat');
-      this.currentUser.disconnect();
+      if(this.isUsuario){
+        this.isUsuario = false;
+        this.currentUser.disconnect();
+      }
     }
   }
 
@@ -156,7 +161,7 @@ export class ChatProvider {
     return this.messagesSubject;
   }
 
-  sendMessage(message) {
+  sendMessage(message):Promise<any> {
     return this.currentUser.sendMessage({
       text: message.text,
       roomId: message.roomId || this.sede.room_id

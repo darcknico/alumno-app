@@ -1,0 +1,145 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" color="secondary">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="item">
+      {{item.fecha | date:'HH:mm EE dd MMM'}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content no-padding color="medium">
+  <ion-list *ngIf="item" no-margin lines="none">
+    <ion-item-divider>
+      <ion-label>Datos</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col size="4">
+            <ion-label text-center>
+              <p>Total</p>
+              <h2>{{item.alumnos_cantidad}}</h2>
+            </ion-label>
+          </ion-col>
+          <ion-col size="4">
+            <ion-label text-center>
+              <p>Aprobados</p>
+              <h2>{{item.alumnos_cantidad_aprobado}}</h2>
+            </ion-label>
+          </ion-col>
+          <ion-col size="4">
+            <ion-label text-center>
+              <p>Desaprobados</p>
+              <h2>{{item.alumnos_cantidad_no_aprobado}}</h2>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">
+            <ion-label text-center>
+              <p>Presentes</p>
+              <h2>{{item.alumnos_cantidad_presente}}</h2>
+            </ion-label>
+          </ion-col>
+          <ion-col size="4" *ngIf="item.fecha_cierre">
+            <ion-label text-center>
+              <p>Cierre</p>
+              <h2>{{item.fecha_cierre | date:'dd/MM/yy'}}</h2>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item *ngIf="item.mesa_examen">
+      <ion-label>
+        <p>Mesa de Examen</p>
+        <h2>{{item.mesa_examen.nombre}}</h2>
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="item.ubicacion">
+      <ion-label>
+        <p>Ubicación</p>
+        <h2>{{item.ubicacion}}</h2>
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="item.observaciones">
+      <ion-label>
+        <p>Observaciones</p>
+        <h2>{{item.observaciones}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-list lines="none" no-margin>
+    <ion-item-divider>
+      <ion-label>Alumnos</ion-label>
+    </ion-item-divider>
+  </ion-list>
+  <ion-list lines="full" no-margin>
+    <ion-item>
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col size="3">
+            <ion-label text-center>
+              Comision
+            </ion-label>
+          </ion-col>
+          <ion-col size="3">
+            <ion-label text-center>
+              Nota
+            </ion-label>
+          </ion-col>
+          <ion-col size="3">
+            <ion-label text-center>
+              Estado
+            </ion-label>
+          </ion-col>
+          <ion-col size="3">
+            <ion-label text-center>
+              Final
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item *ngFor="let item of dataSource$ | async" color="light" class="animated slideInRight">
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col size="12">
+            <ion-label text-wrap>
+              {{item.alumno.apellido}}, {{item.alumno.nombre}} - {{item.alumno.tipo_documento.nombre}}:{{item.alumno.documento}}
+              <ion-badge color="warning" *ngIf="item.adeuda" slot="end">ADEUDA</ion-badge>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3" align-self-center	>
+            <ion-label text-center>
+              <p *ngIf="item.comision">
+                {{item.comision.comision.anio}}
+              </p>
+            </ion-label>
+          </ion-col>
+          <ion-col size="3" align-self-center	>
+            <ion-label text-center>
+              <p>{{item.nota}} {{item.nota_nombre}}</p>
+            </ion-label>
+          </ion-col>
+          <ion-col size="3" align-self-center	>
+            <ion-label text-center>
+              <p>{{item.condicion.nombre}}</p>
+            </ion-label>
+          </ion-col>
+          <ion-col size="3" align-self-center	>
+            <ion-label text-center>
+              <p>{{item.nota_final}} {{item.nota_final_nombre}}</p>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item *ngIf="item?.alumnos_cantidad == 0">
+      <ion-label>No hay alumnos registrados en la mesa de examen</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

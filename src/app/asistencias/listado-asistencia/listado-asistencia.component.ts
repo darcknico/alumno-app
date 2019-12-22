@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonContent, IonInfiniteScroll, ModalController } from '@ionic/angular';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { IonContent, IonInfiniteScroll, ModalController, Platform, NavController } from '@ionic/angular';
 import { FiltroAsistencia, AsistenciaService } from 'src/app/_services/asistencia.service';
 import { Asistencia } from 'src/app/_models/asistencia';
 import { SedeProvider } from 'src/app/providers/sede.provider';
@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './listado-asistencia.component.html',
   styleUrls: ['./listado-asistencia.component.scss'],
 })
-export class ListadoAsistenciaComponent implements OnInit {
+export class ListadoAsistenciaComponent implements OnInit,OnDestroy {
 
   id_sede:number;
   id_producto:number;
@@ -36,6 +36,7 @@ export class ListadoAsistenciaComponent implements OnInit {
   consultando:boolean = false;
   total:number = 0;
 
+  subscription
   constructor(
     private service:AsistenciaService,
     private sedeProvider:SedeProvider,
@@ -45,6 +46,8 @@ export class ListadoAsistenciaComponent implements OnInit {
     private modalCtrl: ModalController,
     private route: ActivatedRoute,
     private router:Router,
+    private platform:Platform,
+    private navCtrl: NavController,
     ) { 
       
   }
@@ -61,6 +64,23 @@ export class ListadoAsistenciaComponent implements OnInit {
         this.id_sede = response;
         this.service.sede(this.id_sede);
         this.refrescar();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+  ionViewWillLeave(){
+    this.subscription.unsubscribe();
+  }
+  ionViewDidEnter(){
+    this.subscription = this.platform.backButton.subscribe(async()=>{
+      const modal = await this.modalCtrl.getTop();
+      if (modal) {
+          modal.dismiss();
+      } else {
+          this.router.navigate(['home']);
       }
     });
   }

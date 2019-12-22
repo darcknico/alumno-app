@@ -14,6 +14,8 @@ import { Usuario } from './_models/usuario';
 import { NetworkProvider, ConnectionStatus } from './providers/network.provider';
 import { ToastProvider } from './providers/toast.provider';
 import { ChatProvider } from './providers/chat.provider';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { DispositivoProvider } from './providers/dispositivo.provider';
 
 @Component({
   selector: 'app-root',
@@ -43,6 +45,11 @@ export class AppComponent {
       url: '/asistencias',
       icon: 'clipboard',
     },
+    {
+      title: 'Mesa Examen - Materias',
+      url: '/mesa_examen_materia',
+      icon: 'browsers',
+    },
   ];
 
   constructor(
@@ -57,6 +64,8 @@ export class AppComponent {
     private networkProvider:NetworkProvider,
     private toast:ToastProvider,
     private chat:ChatProvider,
+    private oneSignal: OneSignal,
+    private dispositivo: DispositivoProvider,
   ) {
     this.initializeApp();
     this.sede = this.sedeProvider.sede$;
@@ -84,6 +93,13 @@ export class AppComponent {
           this.toast.present('Conexion',data + ' ' +  this.networkProvider.getNetworkType());
         }
       });
+
+      if(this.platform.is('cordova')){
+        this.notifications().catch(error=>{
+          console.log('OneSignal');
+          console.log(error);
+        });
+      }
     });
   }
 
@@ -93,4 +109,23 @@ export class AppComponent {
       this.loadingService.dismiss();
     });
   }
+
+  async notifications(){
+    console.log('OneSignal start');
+    this.oneSignal.startInit('ff35f108-67f0-456a-8dec-bc08316a330e', '427072706170');
+    this.dispositivo.iniciar();
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+
+    this.oneSignal.handleNotificationReceived().subscribe(() => {
+    // do something when notification is received
+    });
+
+    this.oneSignal.handleNotificationOpened().subscribe(() => {
+      // do something when a notification is opened
+    });
+
+    this.oneSignal.endInit();
+    console.log('OneSignal end');
+  }
+
 }

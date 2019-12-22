@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { SedeProvider } from 'src/app/providers/sede.provider';
 import { LoadingProvider } from 'src/app/providers/loading.provider';
 import { ComisionEditarModalComponent } from '../comision-editar-modal/comision-editar-modal.component';
-import { IonContent, IonInfiniteScroll, ModalController } from '@ionic/angular';
+import { IonContent, IonInfiniteScroll, ModalController, Platform, NavController } from '@ionic/angular';
 import { FiltroComision, ComisionService } from 'src/app/_services/comision.service';
 import { Comision } from 'src/app/_models/comision';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -16,7 +16,7 @@ import { ListadoComisionAlumnoModalComponent } from '../listado-comision-alumno-
   templateUrl: './listado-comision.component.html',
   styleUrls: ['./listado-comision.component.scss'],
 })
-export class ListadoComisionComponent implements OnInit {
+export class ListadoComisionComponent implements OnInit,OnDestroy {
 
   id_sede:number;
   id_producto:number;
@@ -38,6 +38,7 @@ export class ListadoComisionComponent implements OnInit {
   consultando:boolean = false;
   total:number = 0;
 
+  subscription
   constructor(
     private service:ComisionService,
     private sedeProvider:SedeProvider,
@@ -47,6 +48,8 @@ export class ListadoComisionComponent implements OnInit {
     private modalCtrl: ModalController,
     private route: ActivatedRoute,
     private router:Router,
+    private platform:Platform,
+    private navCtrl: NavController,
     ) { 
       
   }
@@ -63,6 +66,23 @@ export class ListadoComisionComponent implements OnInit {
         this.id_sede = response;
         this.service.sede(this.id_sede);
         this.refrescar();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+  ionViewWillLeave(){
+    this.subscription.unsubscribe();
+  }
+  ionViewDidEnter(){
+    this.subscription = this.platform.backButton.subscribe(async()=>{
+      const modal = await this.modalCtrl.getTop();
+      if (modal) {
+          modal.dismiss();
+      } else {
+          this.router.navigate(['home']);
       }
     });
   }

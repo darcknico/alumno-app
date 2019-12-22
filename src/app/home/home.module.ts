@@ -8,6 +8,9 @@ import { HomePage } from './home.page';
 import { MessageComponent } from './componentes/message/message.component';
 import { ChatNameEditModalComponent } from './chat-name-edit-modal/chat-name-edit-modal.component';
 import { PopoverHomeComponent } from './componentes/popover-home/popover-home.component';
+import { TabChatComponent } from './tab-chat/tab-chat.component';
+import { TabScheduleComponent } from './tab-schedule/tab-schedule.component';
+import { TabAboutComponent } from './tab-about/tab-about.component';
 
 @NgModule({
   imports: [
@@ -18,8 +21,19 @@ import { PopoverHomeComponent } from './componentes/popover-home/popover-home.co
     RouterModule.forChild([
       {
         path: '',
-        component: HomePage
-      }
+        redirectTo: '/home/about',
+        pathMatch: 'full'
+      },
+      {
+        path: '',
+        component: HomePage,
+        children:[
+          { path: 'chat', component: TabChatComponent },
+          { path: 'schedule', component: TabScheduleComponent },
+          { path: 'about', component: TabAboutComponent },
+        ],
+      },
+      
     ])
   ],
   declarations: [
@@ -27,6 +41,9 @@ import { PopoverHomeComponent } from './componentes/popover-home/popover-home.co
     MessageComponent,
     ChatNameEditModalComponent,
     PopoverHomeComponent,
+    TabChatComponent,
+    TabScheduleComponent,
+    TabAboutComponent,
   ],
   entryComponents: [
     ChatNameEditModalComponent,

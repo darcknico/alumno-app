@@ -44,6 +44,14 @@ import { Network } from '@ionic-native/network/ngx';
 import { NetworkProvider } from './providers/network.provider';
 import { ChatProvider } from './providers/chat.provider';
 import { ChatService } from './_services/chat.service';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Device } from '@ionic-native/device/ngx';
+import { NovedadSistemaService } from './_services/novedad_sistema.service';
+import { MesaExamenMateriaService } from './_services/mesa_examen_materia.service';
+import { AppAsistenciaService } from './_services/app_asistencia.service';
+import { AppDispositivoService } from './_services/app_dispositivo.service';
+import { DispositivoProvider } from './providers/dispositivo.provider';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -95,10 +103,18 @@ export function createTranslateLoader(http: HttpClient) {
     NetworkProvider,
     ChatProvider,
     ChatService,
+    DispositivoProvider,
+    OneSignal,
+    Geolocation,
+    Device,
 
     SedeService,
     ComisionService,
     AsistenciaService,
+    NovedadSistemaService,
+    MesaExamenMateriaService,
+    AppAsistenciaService,
+    AppDispositivoService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: "es-AR" },
   ],
